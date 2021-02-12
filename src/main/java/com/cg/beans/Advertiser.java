@@ -15,8 +15,8 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 @ToString
 @Table(name = "Advertisers")
 public class Advertiser {
@@ -32,7 +32,7 @@ public class Advertiser {
 	private String userName;
 	private String password;
 	
-	public Advertiser() {
+	 public Advertiser() {
 		
 	}
 	

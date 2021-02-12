@@ -3,6 +3,7 @@ package com.cg.service;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
 
@@ -38,7 +39,7 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 
 	@Override
 	public Advertiser updateInfo(Advertiser advertiser) {
-		 if(this.dao.save(advertiser)==null) {
+		 if(advertiser==null) {
 			    throw new NotPossibleException("Cannot update this newspaper");
 		 }
 		return this.dao.save(advertiser);
@@ -46,12 +47,11 @@ public class AdvertiserServiceImpl implements AdvertiserService {
 
 	@Override
 	public Advertiser getAdvertiserByUserName(String userName) {
-		Advertiser advertiser = this.dao.findAll().stream().filter(x -> x.getUserName().equals(userName)).findFirst().get();
-		if(advertiser==null) {
-			throw new NoValueFoundException("No Advertiser with particular userName ");
-
+		Optional<Advertiser> advertiser = this.dao.findAll().stream().filter(x -> x.getUserName().equals(userName)).findFirst();
+		if(advertiser.isPresent()) {
+			return advertiser.get();
 		}
-		return this.dao.findAll().stream().filter(x -> x.getUserName().equals(userName)).findFirst().get();
+		else throw new NoValueFoundException("No Advertiser with particular userName ");
 	}
 
 	//Exception Working
